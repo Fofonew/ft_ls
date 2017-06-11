@@ -6,7 +6,7 @@
 /*   By: fofow <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 09:16:35 by fofow             #+#    #+#             */
-/*   Updated: 2017/06/05 22:59:43 by fofow            ###   ########.fr       */
+/*   Updated: 2017/06/12 01:39:31 by fofow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 #include <sys/types.h>
 #include <sys/dir.h>
 #include <stdio.h>
+#include "libft.h"
 
-void	show_content(char *dir_name)
+void	show_content(char *dir_name, int R, int a)
 {
 	struct dirent	*dirent;
 	DIR				*dir;
@@ -25,8 +26,18 @@ void	show_content(char *dir_name)
 		dirent = readdir(dir);
 		if (dirent == NULL)
 			break;
-		printf("%s\n", dirent->d_name);
+		else if (R)
+		{
+			if (dirent->d_name[0] != '.')
+				printf("%s\n", dirent->d_name);
+		}
+		else if (a)
+			printf("%s\n", dirent->d_name);
+		else if (dirent->d_name[0] != '.')
+			printf("%s\n", dirent->d_name);
 	}
+	if (R == 1)
+		printf("\n");
 	closedir(dir);
 }
 
@@ -34,28 +45,52 @@ void	recursive_check(char *name)
 {
 	struct dirent	*dirent;
 	DIR				*dir;
-	show_content(name);
+	static int		a;
+	char *s;
+
+	if (a)
+		printf("%s:\n", s);
+	a = 1;
+	show_content(name, 1, 0);
 	dir = opendir(name);
 	while (1)
 	{
 		dirent = readdir(dir);
 		if (dirent == NULL)
 			break;
-		if (dirent->d_type == 4)
+		if (dirent->d_type == 4 && dirent->d_name[0] != '.')
 		{
-			printf("a");
-			show_content(dirent->d_name);
-			closedir(dir);
+			s = ft_strjoin(name, "/");
+			s = ft_strjoin(s, dirent->d_name);
+			recursive_check(s);
 		}
 	}
+
+		closedir(dir);
 }
 
 int		main(int a, char **v)
 {
-	//if (a == 1)
-		//show_content(".");
-	//else if (a == 2)
-		//show_content(v[1]);
-	recursive_check(".");
+	if (a == 1)
+		show_content(".", 0, 0);
+	else if (a >= 2)
+	{
+		if (v[1][0] == '-' && v[1][1] == 'R')
+		{
+			if (a != 3)
+				recursive_check(".");
+			else
+				recursive_check(v[2]);
+		}
+		if (v[1][0] == '-' && v[1][1] == 'a')
+		{
+			if (a != 3)
+				show_content(".", 0, 1);
+			else
+				show_content(v[2], 0, 1);
+		}
+		else
+			show_content(v[1], 0, 0);
+	}
 	return (0);
 }

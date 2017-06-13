@@ -6,7 +6,7 @@
 /*   By: fofow <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 09:16:35 by fofow             #+#    #+#             */
-/*   Updated: 2017/06/14 01:09:56 by fofow            ###   ########.fr       */
+/*   Updated: 2017/06/14 01:15:01 by fofow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,25 +88,10 @@ void	show_content(char *dir_name, int R, int a, int r)
 	struct dirent	*dirent;
 	DIR				*dir;
 	char			**tab;
-	int i = 0;
+	int				i;
+
+	i = 0;
 	tab = parsing(dir_name);
-	//dir = opendir(dir_name);
-	//while (1)
-	//{
-	//	dirent = readdir(dir);
-	//	if (dirent == NULL)
-	//		break;
-	//	else if (R)
-	//	{
-	//		if (dirent->d_name[0] != '.')
-	//			printf("%s\n", dirent->d_name);
-	//	}
-	//	else if (a)
-	//		printf("%s\n", dirent->d_name);
-	//	else if (dirent->d_name[0] != '.')
-	//		printf("%s\n", dirent->d_name);
-	//}
-	//closedir(dir);
 	if (tab != NULL)
 	{
 		if (r)
@@ -144,9 +129,10 @@ void	recursive_check(char *name)
 	struct dirent	*dirent;
 	DIR				*dir;
 	static int		a;
-	char *s;
-	int b = 0;
+	char 			*s;
+	int				b;
 
+	b = 0;
 	if (a)
 		printf("%s:\n", s);
 	a = 1;

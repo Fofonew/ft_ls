@@ -6,7 +6,7 @@
 /*   By: fofow <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 09:16:35 by fofow             #+#    #+#             */
-/*   Updated: 2017/06/14 01:15:01 by fofow            ###   ########.fr       */
+/*   Updated: 2017/08/15 00:36:58 by fofow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,47 @@
 #include <sys/dir.h>
 #include <stdio.h>
 #include "libft.h"
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <time.h>
+
+char	**sort_param_time(char **tab)
+{
+	int		i;
+	char	*tmp;
+	int		power;
+	struct stat *buf;
+	struct stat *buf2;
+	buf = malloc(sizeof(stat));
+	buf2 = malloc(sizeof(stat));
+
+	power = 1;
+	while (power)
+	{
+		power = 0;
+		i = 1;
+		while (tab[i])
+		{
+
+			if (tab[i + 1] != '\0')
+			{
+
+				stat(tab[i], buf);
+				stat(tab[i + 1], buf2);
+				if ((buf->st_mtime) < (buf2->st_mtime))
+				{
+					tmp = tab[i];
+					tab[i] = tab[i + 1];
+					tab[i + 1] = tmp;
+					power = 1;
+				}
+			}
+			i++;
+		}
+	}
+	return (tab);
+}
 
 char	**sort_param(char **tab)
 {
@@ -59,11 +100,8 @@ char	**parsing(char *dir_name)
 	}
 	if (b != 1)
 	{
-		while (1)
+		while ((dirent = readdir(dir)) != NULL)
 		{
-			dirent = readdir(dir);
-			if (dirent == NULL)
-				break;
 			if (a == 0)
 				str = ft_strdup(dirent->d_name);
 			if (a == 1)
@@ -81,14 +119,13 @@ char	**parsing(char *dir_name)
 	return (NULL);
 }
 
-
-
-void	show_content(char *dir_name, int R, int a, int r)
+void	show_content(char *dir_name, int R, int a, int r, int l)
 {
 	struct dirent	*dirent;
 	DIR				*dir;
 	char			**tab;
 	int				i;
+	struct stat		*buf;
 
 	i = 0;
 	tab = parsing(dir_name);
@@ -105,6 +142,13 @@ void	show_content(char *dir_name, int R, int a, int r)
 			if (r)
 				if (i == 0)
 					break;
+			if (l)
+			{
+				buf = malloc(sizeof(stat));
+				stat(tab[i], buf);
+				printf("%s ", ctime(&buf->st_mtime));
+				free(buf);
+			}
 			if (a)
 				printf("%s\n", tab[i]);
 			else if (R)
@@ -124,7 +168,7 @@ void	show_content(char *dir_name, int R, int a, int r)
 		printf("\n");
 }
 
-void	recursive_check(char *name)
+void	recursive_check(char *name, int optiona, int optionr, int optionl)
 {
 	struct dirent	*dirent;
 	DIR				*dir;
@@ -133,10 +177,12 @@ void	recursive_check(char *name)
 	int				b;
 
 	b = 0;
+
 	if (a)
-		printf("%s:\n", s);
+		printf("%s:\n", name);
 	a = 1;
-	show_content(name, 1, 0, 0);
+
+	show_content(name, 1, optiona, optionr, optionl);
 	dir = opendir(name);
 	if (dir == NULL)
 	{
@@ -145,16 +191,14 @@ void	recursive_check(char *name)
 	}
 	if (b != 1)
 	{
-		while (1)
+		while ((dirent = readdir(dir)) != NULL)
 		{
-			dirent = readdir(dir);
-			if (dirent == NULL)
-				break;
 			if (dirent->d_type == 4 && dirent->d_name[0] != '.')
 			{
 				s = ft_strjoin(name, "/");
 				s = ft_strjoin(s, dirent->d_name);
-				recursive_check(s);
+
+				recursive_check(s, optiona, optionr, optionl);
 			}
 		}
 	closedir(dir);
@@ -163,43 +207,63 @@ void	recursive_check(char *name)
 
 int		main(int a, char **v)
 {
+	int optiona = 0;
+	int optionr = 0;
+	int optionR = 0;
+	int optionl = 0;
+	int secondpass = 0;
+	static int e = 0;
+
 	if (a == 1)
-	{
-		show_content(".", 0, 0, 0);
-		//parsing(".");
-	}
+		show_content(".", 0, 0, 0, 0);
 	if (a >= 2)
 	{
-		if (v[1][0] == '-' && v[1][1] == 'R')
+		int x = 1;
+		while (v[x])
 		{
-
-			if (a != 3)
-				recursive_check(".");
+			int y = 1;
+			if (v[x][0] == '-')
+			{
+				while (v[x][y])
+				{
+					if (v[x][y] == 'R')
+						optionR = 1;
+					if (v[x][y] == 'r')
+						optionr = 1;
+					if (v[x][y] == 'a')
+						optiona = 1;
+					if (v[x][y] == 'l')
+						optionl = 1;
+					if (v[x][y] != 'R' && v[x][y] != 'r' && v[x][y] != 'a' && v[x][y] != 'l' && v[x][y] != 't')
+					{
+						printf("ft_ls: illegal option -- %c\nusage: ft_ls [-arRlt] [file ...]\n", v[x][y]);
+						exit(1);
+					}
+					y++;
+				}
+			}
 			else
-				recursive_check(v[2]);
+			{
+				if (optionR == 1)
+					recursive_check(v[x], optiona, optionr, optionl);
+				else
+				{
+					if (e)
+						printf("\n");
+					e = 1;
+					printf("%s:\n", v[x]);
+					show_content(v[x], 0, optiona, optionr, optionl);
+				}
+				secondpass = 1;
+			}
+			x++;
 		}
-		else if (v[1][0] == '-' && v[1][1] == 'a')
-		{
-			if (a != 3)
-				show_content(".", 0, 1, 0);
-			else
-				show_content(v[2], 0, 1, 0);
-		}
-		else if (v[1][0] == '-' && v[1][1] == 'r')
-		{
-			if (a != 3)
-				show_content(".", 0, 0, 1);
-			else
-				show_content(v[2], 0, 0, 1);
-		}
-		else if (v[1][0] == '-' && (/*v[1][1] != 'l' && */v[1][1] != 'R' 
-					&& v[1][1] != 'a' && v[1][1] != 'r' /*&& v[1][1] != 't'*/))
-		{
-			ft_putstr("Error : option not supported\n");
-			return (1);
-		}
-		else
-			show_content(v[1], 0, 0, 0);
+		if (v[x - 1][0] == '-' && optionR != 1)
+			show_content(".", 0, optiona, optionr, optionl);
+		else if (v[x -1][0] == '-' && optionR == 1)
+			recursive_check(".", optiona, optionr, optionl);
+		else if (secondpass != 1)
+			show_content(v[x - 1], 0, optiona, optionr, optionl);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: fofow <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 09:16:35 by fofow             #+#    #+#             */
-/*   Updated: 2017/08/15 00:36:58 by fofow            ###   ########.fr       */
+/*   Updated: 2017/10/23 11:06:55 by doriol           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,8 @@ char	**sort_param_time(char **tab)
 	int		i;
 	char	*tmp;
 	int		power;
-	struct stat *buf;
-	struct stat *buf2;
-	buf = malloc(sizeof(stat));
-	buf2 = malloc(sizeof(stat));
+	struct stat buf;
+	struct stat buf2;
 
 	power = 1;
 	while (power)
@@ -41,9 +39,9 @@ char	**sort_param_time(char **tab)
 			if (tab[i + 1] != '\0')
 			{
 
-				stat(tab[i], buf);
-				stat(tab[i + 1], buf2);
-				if ((buf->st_mtime) < (buf2->st_mtime))
+				stat(tab[i], &buf);
+				stat(tab[i + 1], &buf2);
+				if ((buf.st_mtime) < (buf2.st_mtime))
 				{
 					tmp = tab[i];
 					tab[i] = tab[i + 1];
@@ -84,7 +82,7 @@ char	**sort_param(char **tab)
 	return (tab);
 }
 
-char	**parsing(char *dir_name)
+char	**parsing(char *dir_name, int t)
 {
 	struct dirent	*dirent;
 	DIR				*dir;
@@ -112,23 +110,32 @@ char	**parsing(char *dir_name)
 			a = 1;
 		}
 		tab = ft_strsplit(str, '%');
-		sort_param(tab);
+		if (t)
+			sort_param_time(tab);
+		else
+			sort_param(tab);
 		closedir(dir);
 		return(tab);
 	}
 	return (NULL);
 }
 
-void	show_content(char *dir_name, int R, int a, int r, int l)
+void	show_content(char *dir_name, int R, int a, int r, int l, int ot)
 {
 	struct dirent	*dirent;
 	DIR				*dir;
 	char			**tab;
 	int				i;
-	struct stat		*buf;
+	struct stat		buf;
+	char			*time;
+	char			*tmp;
+	int				t;
+	int				t2;
+	int 			stop;
 
 	i = 0;
-	tab = parsing(dir_name);
+
+	tab = parsing(dir_name, ot);
 	if (tab != NULL)
 	{
 		if (r)
@@ -144,10 +151,34 @@ void	show_content(char *dir_name, int R, int a, int r, int l)
 					break;
 			if (l)
 			{
-				buf = malloc(sizeof(stat));
-				stat(tab[i], buf);
-				printf("%s ", ctime(&buf->st_mtime));
-				free(buf);
+				t = 0;
+				t2 = 0;
+				stop = 0;
+				lstat(tab[i], &buf);
+				tmp = ctime(&buf.st_ctime);
+				time = ft_strnew(12);
+				while(tmp[t])
+				{
+					if (tmp[t] == ':')
+					{
+						stop++;
+						if (stop == 2)
+							break;
+					}
+					if (t < 4)
+						t++;
+					else
+					{
+						time[t2] = tmp[t];
+						t2++;
+						t++;
+					}
+				}
+				if (a)
+					printf("%s ", time);
+				else
+					if (tab[i][0] != '.')
+						printf("%s ", time);
 			}
 			if (a)
 				printf("%s\n", tab[i]);
@@ -168,7 +199,7 @@ void	show_content(char *dir_name, int R, int a, int r, int l)
 		printf("\n");
 }
 
-void	recursive_check(char *name, int optiona, int optionr, int optionl)
+void	recursive_check(char *name, int optiona, int optionr, int optionl, int optiont)
 {
 	struct dirent	*dirent;
 	DIR				*dir;
@@ -182,7 +213,7 @@ void	recursive_check(char *name, int optiona, int optionr, int optionl)
 		printf("%s:\n", name);
 	a = 1;
 
-	show_content(name, 1, optiona, optionr, optionl);
+	show_content(name, 1, optiona, optionr, optionl, optiont);
 	dir = opendir(name);
 	if (dir == NULL)
 	{
@@ -198,7 +229,7 @@ void	recursive_check(char *name, int optiona, int optionr, int optionl)
 				s = ft_strjoin(name, "/");
 				s = ft_strjoin(s, dirent->d_name);
 
-				recursive_check(s, optiona, optionr, optionl);
+				recursive_check(s, optiona, optionr, optionl, optiont);
 			}
 		}
 	closedir(dir);
@@ -211,11 +242,12 @@ int		main(int a, char **v)
 	int optionr = 0;
 	int optionR = 0;
 	int optionl = 0;
+	int optiont = 0;
 	int secondpass = 0;
 	static int e = 0;
 
 	if (a == 1)
-		show_content(".", 0, 0, 0, 0);
+		show_content(".", 0, 0, 0, 0, 0);
 	if (a >= 2)
 	{
 		int x = 1;
@@ -234,6 +266,8 @@ int		main(int a, char **v)
 						optiona = 1;
 					if (v[x][y] == 'l')
 						optionl = 1;
+					if (v[x][y] == 't')
+						optiont = 1;
 					if (v[x][y] != 'R' && v[x][y] != 'r' && v[x][y] != 'a' && v[x][y] != 'l' && v[x][y] != 't')
 					{
 						printf("ft_ls: illegal option -- %c\nusage: ft_ls [-arRlt] [file ...]\n", v[x][y]);
@@ -245,25 +279,25 @@ int		main(int a, char **v)
 			else
 			{
 				if (optionR == 1)
-					recursive_check(v[x], optiona, optionr, optionl);
+					recursive_check(v[x], optiona, optionr, optionl, optiont);
 				else
 				{
 					if (e)
 						printf("\n");
 					e = 1;
 					printf("%s:\n", v[x]);
-					show_content(v[x], 0, optiona, optionr, optionl);
+					show_content(v[x], 0, optiona, optionr, optionl, optiont);
 				}
 				secondpass = 1;
 			}
 			x++;
 		}
 		if (v[x - 1][0] == '-' && optionR != 1)
-			show_content(".", 0, optiona, optionr, optionl);
+			show_content(".", 0, optiona, optionr, optionl, optiont);
 		else if (v[x -1][0] == '-' && optionR == 1)
-			recursive_check(".", optiona, optionr, optionl);
+			recursive_check(".", optiona, optionr, optionl, optiont);
 		else if (secondpass != 1)
-			show_content(v[x - 1], 0, optiona, optionr, optionl);
+			show_content(v[x - 1], 0, optiona, optionr, optionl, optiont);
 	}
 	return (0);
 }

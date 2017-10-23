@@ -6,7 +6,7 @@
 /*   By: fofow <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 09:16:35 by fofow             #+#    #+#             */
-/*   Updated: 2017/10/23 11:47:04 by doriol           ###   ########.fr       */
+/*   Updated: 2017/10/24 00:21:48 by fofow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <time.h>
+#include "ls.h"
+
 
 char	**sort_param_time(char **tab)
 {
@@ -120,7 +122,7 @@ char	**parsing(char *dir_name, int t)
 	return (NULL);
 }
 
-void	show_content(char *dir_name, int R, int a, int r, int l, int ot)
+void	show_content(char *dir_name, int R, t_option *option)
 {
 	struct dirent	*dirent;
 	DIR				*dir;
@@ -136,26 +138,26 @@ void	show_content(char *dir_name, int R, int a, int r, int l, int ot)
 
 	i = 0;
 
-	tab = parsing(dir_name, ot);
+	tab = parsing(dir_name, option->optiont);
 	if (tab != NULL)
 	{
-		if (r)
+		if (option->optionr)
 		{
 			while(tab[i])
 				i++;
 			i -= 1;
 		}
-		if (l)
+		if (option->optionl)
 		{
 			lstat(tab[i], &bufc);
 			printf("total %lld\n", bufc.st_blocks);
 		}
 		while (tab[i])
 		{
-			if (r)
+			if (option->optionr)
 				if (i == 0)
 					break;
-			if (l)
+			if (option->optionl)
 			{
 				t = 0;
 				t2 = 0;
@@ -180,13 +182,13 @@ void	show_content(char *dir_name, int R, int a, int r, int l, int ot)
 						t++;
 					}
 				}
-					if (a)
+				if (option->optiona)
 					printf("%u\t%lld\t%s ", buf.st_nlink, buf.st_size, time);
 				else
 					if (tab[i][0] != '.')
 						printf("%u\t%lld\t%s ", buf.st_nlink, buf.st_size, time);
 			}
-			if (a)
+			if (option->optiona)
 				printf("%s\n", tab[i]);
 			else if (R)
 			{
@@ -195,7 +197,7 @@ void	show_content(char *dir_name, int R, int a, int r, int l, int ot)
 			}
 			else if (tab[i][0] != '.')
 				printf("%s\n", tab[i]);
-			if (r)
+			if (option->optionr)
 				i--;
 			else
 				i++;
@@ -205,7 +207,7 @@ void	show_content(char *dir_name, int R, int a, int r, int l, int ot)
 		printf("\n");
 }
 
-void	recursive_check(char *name, int optiona, int optionr, int optionl, int optiont)
+void	recursive_check(char *name, t_option *option)
 {
 	struct dirent	*dirent;
 	DIR				*dir;
@@ -214,12 +216,11 @@ void	recursive_check(char *name, int optiona, int optionr, int optionl, int opti
 	int				b;
 
 	b = 0;
-
 	if (a)
 		printf("%s:\n", name);
 	a = 1;
 
-	show_content(name, 1, optiona, optionr, optionl, optiont);
+	show_content(name, 1, option);
 	dir = opendir(name);
 	if (dir == NULL)
 	{
@@ -234,77 +235,106 @@ void	recursive_check(char *name, int optiona, int optionr, int optionl, int opti
 			{
 				s = ft_strjoin(name, "/");
 				s = ft_strjoin(s, dirent->d_name);
-
-				recursive_check(s, optiona, optionr, optionl, optiont);
+				recursive_check(s, option);
 			}
 		}
-	closedir(dir);
+		closedir(dir);
 	}
+}
+
+t_option	*set(t_option *option)
+{
+	option->optionR = 0;
+	option->optiona = 0;
+	option->optionr = 0;
+	option->optionl = 0;
+	option->optiont = 0;
+	return (option);
 }
 
 int		main(int a, char **v)
 {
-	int optiona = 0;
-	int optionr = 0;
-	int optionR = 0;
-	int optionl = 0;
-	int optiont = 0;
-	int secondpass = 0;
-	static int e = 0;
+	t_option	*option;
 
+	option = malloc(sizeof(t_option));
+	set(option);
 	if (a == 1)
-		show_content(".", 0, 0, 0, 0, 0);
+		show_content(".", 0, option);
 	if (a >= 2)
-	{
-		int x = 1;
-		while (v[x])
-		{
-			int y = 1;
-			if (v[x][0] == '-')
-			{
-				while (v[x][y])
-				{
-					if (v[x][y] == 'R')
-						optionR = 1;
-					if (v[x][y] == 'r')
-						optionr = 1;
-					if (v[x][y] == 'a')
-						optiona = 1;
-					if (v[x][y] == 'l')
-						optionl = 1;
-					if (v[x][y] == 't')
-						optiont = 1;
-					if (v[x][y] != 'R' && v[x][y] != 'r' && v[x][y] != 'a' && v[x][y] != 'l' && v[x][y] != 't')
-					{
-						printf("ft_ls: illegal option -- %c\nusage: ft_ls [-arRlt] [file ...]\n", v[x][y]);
-						exit(1);
-					}
-					y++;
-				}
-			}
-			else
-			{
-				if (optionR == 1)
-					recursive_check(v[x], optiona, optionr, optionl, optiont);
-				else
-				{
-					if (e)
-						printf("\n");
-					e = 1;
-					if (v[x][0] != '.')
-						printf("%s:\n", v[x]);
-					show_content(v[x], 0, optiona, optionr, optionl, optiont);
-				}
-				secondpass = 1;
-			}
-			x++;
-		}
-		if (v[x - 1][0] == '-' && optionR != 1)
-			show_content(".", 0, optiona, optionr, optionl, optiont);
-		else if (v[x -1][0] == '-' && optionR == 1)
-			recursive_check(".", optiona, optionr, optionl, optiont);
-		else if (secondpass != 1)
-			show_content(v[x - 1], 0, optiona, optionr, optionl, optiont);
-	}
+		check_option(v, option);
 	return (0);
+}
+
+t_option	*check_option2(char **v, t_option *option, int x)
+{
+	int y;
+
+	y = 1;
+	while (v[x][y])
+	{
+		if (v[x][y] == 'R')
+			option->optionR = 1;
+		if (v[x][y] == 'r')
+			option->optionr = 1;
+		if (v[x][y] == 'a')
+			option->optiona = 1;
+		if (v[x][y] == 'l')
+			option->optionl = 1;
+		if (v[x][y] == 't')
+			option->optiont = 1;
+		if (v[x][y] != 'R' && v[x][y] != 'r' && v[x][y] != 'a' &&
+				v[x][y] != 'l' && v[x][y] != 't')
+		{
+			printf("ft_ls: illegal option -- %c\nusage: ft_ls [-arRlt] [file ...]\n", v[x][y]);
+			exit(1);
+		}
+		y++;
+	}
+	return (option);
+}
+
+int		checkoption3(char **v, t_option *option, int x, int e)
+{
+	static	int	secondpass;
+	secondpass = 0;
+	if (option->optionR == 1)
+		recursive_check(v[x], option);
+	else
+	{
+		if (e)
+			printf("\n");
+		e = 1;
+		if (v[x][0] != '.')
+			printf("%s:\n", v[x]);
+		show_content(v[x], 0, option);
+	}
+	secondpass = 1;
+	return (e);
+}
+
+t_option	*check_option(char **v, t_option *option)
+{
+	int 		x;
+	int			secondpass;
+	static int	e;
+
+	x = 1;
+	secondpass = 0;
+	e = 0;
+	while (v[x])
+	{
+		int y = 1;
+		if (v[x][0] == '-')
+			check_option2(v, option, x);
+		else
+			checkoption3(v, option, x, e);
+		x++;
+	}
+	if (v[x - 1][0] == '-' && option->optionR != 1)
+		show_content(".", 0, option);
+	else if (v[x -1][0] == '-' && option->optionR == 1)
+		recursive_check(".", option);
+	else if (secondpass != 1)
+		show_content(v[x - 1], 0, option);
+	return (option);
 }

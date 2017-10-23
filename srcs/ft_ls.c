@@ -6,7 +6,7 @@
 /*   By: fofow <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 09:16:35 by fofow             #+#    #+#             */
-/*   Updated: 2017/10/23 11:06:55 by doriol           ###   ########.fr       */
+/*   Updated: 2017/10/23 11:47:04 by doriol           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ void	show_content(char *dir_name, int R, int a, int r, int l, int ot)
 	char			**tab;
 	int				i;
 	struct stat		buf;
+	struct stat		bufc;
 	char			*time;
 	char			*tmp;
 	int				t;
@@ -143,6 +144,11 @@ void	show_content(char *dir_name, int R, int a, int r, int l, int ot)
 			while(tab[i])
 				i++;
 			i -= 1;
+		}
+		if (l)
+		{
+			lstat(tab[i], &bufc);
+			printf("total %lld\n", bufc.st_blocks);
 		}
 		while (tab[i])
 		{
@@ -174,11 +180,11 @@ void	show_content(char *dir_name, int R, int a, int r, int l, int ot)
 						t++;
 					}
 				}
-				if (a)
-					printf("%s ", time);
+					if (a)
+					printf("%u\t%lld\t%s ", buf.st_nlink, buf.st_size, time);
 				else
 					if (tab[i][0] != '.')
-						printf("%s ", time);
+						printf("%u\t%lld\t%s ", buf.st_nlink, buf.st_size, time);
 			}
 			if (a)
 				printf("%s\n", tab[i]);
@@ -285,7 +291,8 @@ int		main(int a, char **v)
 					if (e)
 						printf("\n");
 					e = 1;
-					printf("%s:\n", v[x]);
+					if (v[x][0] != '.')
+						printf("%s:\n", v[x]);
 					show_content(v[x], 0, optiona, optionr, optionl, optiont);
 				}
 				secondpass = 1;

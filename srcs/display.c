@@ -87,28 +87,18 @@ t_display	*show_content3(char *dir_name, int r, t_display *display, t_option *op
 
 t_display	*show_content2(char *dir_name, int r, t_display *display, t_option *option)
 {
-	else if (display->tab[display->i][0] != '.')
+	if (option->optionrr)
 	{
-		if (option->optionrr)
-		{
-			if (display->first)
-				printf("\n%s", display->tab[display->i]);
-			else
-			{
-				printf("%s", display->tab[display->i]);
-				display->first = 1;
-			}
-		}
+		if (display->first)
+			printf("\n%s", display->tab[display->i]);
 		else
-			printf("%s\n", display->tab[display->i]);
+		{
+			printf("%s", display->tab[display->i]);
+			display->first = 1;
+		}
 	}
-	if (option->optionr)
-		if (display->i == 0)
-			break ;
-	if (option->optionr)
-		display->i--;
 	else
-		display->i++;
+		printf("%s\n", display->tab[display->i]);
 	return (display);
 }
 
@@ -205,9 +195,9 @@ void		show_content(char *dir_name, int r, t_option *option)
 				}*/
 			}
 			show_content2(dir_name, r, display, option);
-			/*else if (display->tab[display->i][0] != '.')
+			else if (display->tab[display->i][0] != '.')
 			{
-				if (option->optionrr)
+				/*if (option->optionrr)
 				{
 					if (display->first)
 						printf("\n%s", display->tab[display->i]);
@@ -219,14 +209,14 @@ void		show_content(char *dir_name, int r, t_option *option)
 				}
 				else
 					printf("%s\n", display->tab[display->i]);
-			}
+			}*/
 			if (option->optionr)
 				if (display->i == 0)
 					break ;
 			if (option->optionr)
 				display->i--;
 			else
-				display->i++;*/
+				display->i++;
 		}
 	}
 	if (r == 1)

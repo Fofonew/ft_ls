@@ -37,6 +37,22 @@ typedef	struct	s_recursive
 	DIR			*dir;
 }				t_recursive;
 
+typedef struct	s_display
+{
+	int			first;
+	int			i;
+	char		**tab;
+	struct stat	buf;
+	struct stat	bufc;
+	char		*time;
+	char		*tmp;
+	int			t;
+	int			t2;
+	int			stop;
+	struct dirent	*dirent;
+	dir			*dir;
+}				t_display;
+
 typedef struct	s_sort
 {
 	int			i;

@@ -14,125 +14,127 @@
 
 void	show_content(char *dir_name, int r, t_option *option)
 {
-	struct dirent	*dirent;
-	DIR				*dir;
-	char			**tab;
-	int				i;
-	struct stat		buf;
-	struct stat		bufc;
-	char			*time;
-	char			*tmp;
-	int				t;
-	int				t2;
-	int				stop;
-	static int		first;
+	//struct dirent	*dirent;
+	//DIR				*dir;
+	//char			**tab;
+	//int				i;
+	//struct stat		buf;
+	//struct stat		bufc;
+	//char			*time;
+	//char			*tmp;
+	//int				t;
+	//int				t2;
+	//int				stop;
+	//static int		first;
+	t_display			*display;
 
-	i = 0;
-	tab = parsing(dir_name, option->optiont);
-	if (tab != NULL)
+	display = malloc(sizeof(t_display));
+	display->i = 0;
+	display->tab = parsing(dir_name, option->optiont);
+	if (display->tab != NULL)
 	{
 		if (option->optionr)
 		{
-			while (tab[i])
-				i++;
-			i -= 1;
+			while (display->tab[display->i])
+			display->i++;
+			display->i -= 1;
 		}
 		if (option->optionl)
 		{
-			lstat(tab[i], &bufc);
-			printf("total %lld\n", bufc.st_blocks);
+			lstat(display->tab[display->i], display->&bufc);
+			printf("total %lld\n", display->bufc.st_blocks);
 		}
-		while (tab[i])
+		while (display->tab[display->i])
 		{
 			if (option->optionl)
 			{
-				t = 0;
-				t2 = 0;
-				stop = 0;
-				lstat(tab[i], &buf);
-				tmp = ctime(&buf.st_ctime);
-				time = ft_strnew(12);
-				while (tmp[t])
+				display->t = 0;
+				display->t2 = 0;
+				display->stop = 0;
+				lstat(display->tab[display->i], display->&buf);
+				display->tmp = ctime(display->&buf.st_ctime);
+				display->time = ft_strnew(12);
+				while (display->tmp[display->t])
 				{
-					if (tmp[t] == ':')
+					if (display->tmp[display->t] == ':')
 					{
-						stop++;
-						if (stop == 2)
+						display->stop++;
+						if (display->stop == 2)
 							break ;
 					}
-					if (t < 4)
-						t++;
+					if (display->t < 4)
+						display->t++;
 					else
 					{
-						time[t2] = tmp[t];
-						t2++;
-						t++;
+						display->time[display->t2] = display->tmp[display->t];
+						display->t2++;
+						display->t++;
 					}
 				}
 				if (option->optiona)
-					printf("%u\t%lld\t%s ", buf.st_nlink, buf.st_size, time);
+					printf("%u\t%lld\t%s ", display->buf.st_nlink, display->buf.st_size, display->time);
 				else
 				{
-					if (tab[i][0] != '.')
-						printf("%u\t%lld\t%s ", buf.st_nlink, \
-								buf.st_size, time);
+					if (display->tab[display->i][0] != '.')
+						printf("%u\t%lld\t%s ", display->buf.st_nlink, \
+							display->buf.st_size, display->time);
 				}
 			}
 			if (option->optiona)
 			{
 				if (option->optionrr)
 				{
-					if (first)
-						printf("\n%s", tab[i]);
+					if (display->first)
+						printf("\n%s", display->tab[display->i]);
 					else
 					{
-						printf("%s", tab[i]);
-						first = 1;
+						printf("%s", display->tab[display->i]);
+						display->first = 1;
 					}
 				}
 				else
-					printf("%s\n", tab[i]);
+					printf("%s\n", display->tab[display->i]);
 			}
 			else if (r)
 			{
-				if (tab[i][0] != '.')
+				if (display->tab[display->i][0] != '.')
 				{
 					if (option->optionrr)
 					{
-						if (first)
-							printf("\n%s", tab[i]);
+						if (display->first)
+							printf("\n%s", display->tab[display->i]);
 						else
 						{
-							printf("%s", tab[i]);
-							first = 1;
+							printf("%s", display->tab[display->i]);
+							display->first = 1;
 						}
 					}
 					else
-						printf("%s\n", tab[i]);
+						printf("%s\n", display->tab[display->i]);
 				}
 			}
-			else if (tab[i][0] != '.')
+			else if (display->tab[display->i][0] != '.')
 			{
 				if (option->optionrr)
 				{
-					if (first)
-						printf("\n%s", tab[i]);
+					if (display->first)
+						printf("\n%s", display->tab[display->i]);
 					else
 					{
-						printf("%s", tab[i]);
-						first = 1;
+						printf("%s", display->tab[display->i]);
+						display->first = 1;
 					}
 				}
 				else
-					printf("%s\n", tab[i]);
+					printf("%s\n", display->tab[display->i]);
 			}
 			if (option->optionr)
-				if (i == 0)
+				if (display->i == 0)
 					break ;
 			if (option->optionr)
-				i--;
+				display->i--;
 			else
-				i++;
+				display->i++;
 		}
 	}
 	if (r == 1)

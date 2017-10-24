@@ -6,7 +6,7 @@
 /*   By: doriol <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 16:46:16 by doriol            #+#    #+#             */
-/*   Updated: 2017/10/24 20:28:08 by fofow            ###   ########.fr       */
+/*   Updated: 2017/10/24 20:51:52 by fofow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,9 +194,9 @@ void		show_content(char *dir_name, int r, t_option *option)
 						printf("%s\n", display->tab[display->i]);
 				}*/
 			}
-			show_content2(dir_name, r, display, option);
 			else if (display->tab[display->i][0] != '.')
 			{
+				show_content2(dir_name, r, display, option);
 				/*if (option->optionrr)
 				{
 					if (display->first)
@@ -208,8 +208,8 @@ void		show_content(char *dir_name, int r, t_option *option)
 					}
 				}
 				else
-					printf("%s\n", display->tab[display->i]);
-			}*/
+					printf("%s\n", display->tab[display->i]);*/
+			}
 			if (option->optionr)
 				if (display->i == 0)
 					break ;

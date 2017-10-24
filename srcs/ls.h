@@ -39,5 +39,7 @@ char		**parsing(char *dir_name, int t);
 void		show_content(char *dir_name, int R, t_option *option);
 void		recursive_check(char *name, t_option *option);
 t_option	*check_option(char **v, t_option *option);
+t_option	*check_option2(char **v, t_option *option, int x);
+int			check_option3(char **v, t_option *option, int x, int e);
 
 #endif

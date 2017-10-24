@@ -32,7 +32,7 @@ t_display	*show_content_master(char *dir_name, int r, t_display *display, t_opti
 		display->i--;
 	else
 		display->i++;
-		return (display);
+	return (display);
 }
 
 t_display	*show_content6(char *dir_name, int r, t_display *display, t_option *option)
@@ -155,7 +155,7 @@ void		show_content(char *dir_name, int r, t_option *option)
 		if (option->optionr)
 		{
 			while (display->tab[display->i])
-			display->i++;
+				display->i++;
 			display->i -= 1;
 		}
 		if (option->optionl)

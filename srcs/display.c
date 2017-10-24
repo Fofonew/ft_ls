@@ -24,7 +24,10 @@ t_display	*show_content_master(char *dir_name, int r, t_display *display, t_opti
 		show_content2(dir_name, r, display, option);
 	if (option->optionr)
 		if (display->i == 0)
-			return (1);
+		{
+			display->breakk = 1;
+			return (display);
+		}
 	if (option->optionr)
 		display->i--;
 	else
@@ -38,7 +41,10 @@ t_display	*show_content6(char *dir_name, int r, t_display *display, t_option *op
 	{
 		display->stop++;
 		if (display->stop == 2)
-			return (1);
+		{
+			display->breakk = 1;
+			return (display);
+		}
 	}
 	if (display->t < 4)
 		display->t++;
@@ -60,8 +66,11 @@ t_display	*show_content5(char *dir_name, int r, t_display *display, t_option *op
 	display->tmp = ctime(&display->buf.st_ctime);
 	display->time = ft_strnew(12);
 	while (display->tmp[display->t])
-		if ((show_content6(dir_name, r, display, option)) == 1)
+	{
+		show_content6(dir_name, r, display, option)
+		if (display->breakk == 1)
 			break ;
+	}
 	if (option->optiona)
 		printf("%u\t%lld\t%s ", display->buf.st_nlink, display->buf.st_size, display->time);
 	else
@@ -127,13 +136,19 @@ t_display	*show_content2(char *dir_name, int r, t_display *display, t_option *op
 	return (display);
 }
 
+t_display	*set(t_display *display)
+{
+	display->i = 0;
+	display->tab = parsing(dir_name, option->optiont);
+	display->breakk = 0;
+	return (display);
+}
+
 void		show_content(char *dir_name, int r, t_option *option)
 {
 	t_display			*display;
 
 	display = malloc(sizeof(t_display));
-	display->i = 0;
-	display->tab = parsing(dir_name, option->optiont);
 	if (display->tab != NULL)
 	{
 		if (option->optionr)
@@ -148,8 +163,11 @@ void		show_content(char *dir_name, int r, t_option *option)
 			printf("total %lld\n", display->bufc.st_blocks);
 		}
 		while (display->tab[display->i])
-			if ((show_content_master(dir_name, r, display, option)) == 1)
+		{
+			show_content_master(dir_name, r, display, option)
+			if (display->breakk == 1)
 				break ;
+		}
 	}
 	if (r == 1)
 		printf("\n");

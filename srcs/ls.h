@@ -23,68 +23,76 @@
 # include <unistd.h>
 # include <time.h>
 
-typedef struct	s_parse
+typedef struct		s_parse
 {
-	char		*str;
-	char		**tab;
-	int			a;
-	int			b;
-}				t_parse;
+	char			*str;
+	char			**tab;
+	int				a;
+	int				b;
+}					t_parse;
 
-typedef	struct	s_recursive
+typedef	struct		s_recursive
 {
-	int			b;
-	DIR			*dir;
-}				t_recursive;
+	int				b;
+	DIR				*dir;
+}					t_recursive;
 
-typedef struct	s_display
+typedef struct		s_display
 {
-	int			first;
-	int			i;
-	char		**tab;
-	struct stat	buf;
-	struct stat	bufc;
-	char		*time;
-	char		*tmp;
-	int			t;
-	int			t2;
-	int			stop;
+	int				first;
+	int				i;
+	char			**tab;
+	struct stat		buf;
+	struct stat		bufc;
+	char			*time;
+	char			*tmp;
+	int				t;
+	int				t2;
+	int				stop;
 	struct dirent	*dirent;
-	DIR			*dir;
-}				t_display;
+	DIR				*dir;
+	int				breakk;
+}					t_display;
 
-typedef struct	s_sort
+typedef struct		s_sort
 {
-	int			i;
-	char		**tab;
-	int			power;
-}				t_sort;
+	int				i;
+	char			**tab;
+	int				power;
+}					t_sort;
 
-typedef	struct	s_option
+typedef	struct		s_option
 {
-	int			optionrr;
-	int			optiona;
-	int			optionr;
-	int			optionl;
-	int			optiont;
-	int			y;
-}				t_option;
+	int				optionrr;
+	int				optiona;
+	int				optionr;
+	int				optionl;
+	int				optiont;
+	int				y;
+}					t_option;
 
-t_display		*show_content_master(char *dir_name, int r, t_display *display, t_option *option);
-t_display		*show_content6(char *dir_name, int r, t_display *display, t_option *option);
-t_display		*show_content5(char *dir_name, int r, t_display *display, t_option *option);
-t_display		*show_content4(char *dir_name, int r, t_display *display, t_option *option);
-t_display		*show_content3(char *dir_name, int r, t_display *display, t_option *option);
-t_display		*show_content2(char *dir_name, int r, t_display *display, t_option *option);
-char			**sort_param_time(char **tab);
-char			**sort_param(char **tab);
-char			**parsing(char *dir_name, int t);
-void			show_content(char *dir_name, int r, t_option *option);
-void			recursive_check(char *name, t_option *option);
-t_option		*check_option(char **v, t_option *option);
-t_option		*check_option2(char **v, t_option *option, int x);
-int				check_option3(char **v, t_option *option, int x);
-t_recursive		*recursive2(t_recursive *recursive,
-				char *name, t_option *option);
+t_display			*show_content_master(char *dir_name, int r,
+					t_display *display, t_option *option);
+t_display			*show_content6(char *dir_name, int r, t_display *display,
+					t_option *option);
+t_display			*show_content5(char *dir_name, int r, t_display *display,
+					t_option *option);
+t_display			*show_content4(char *dir_name, int r, t_display *display,
+					t_option *option);
+t_display			*show_content3(char *dir_name, int r, t_display *display,
+					t_option *option);
+t_display			*show_content2(char *dir_name, int r, t_display *display,
+					t_option *option);
+t_display			*set(t_display *display);
+char				**sort_param_time(char **tab);
+char				**sort_param(char **tab);
+char				**parsing(char *dir_name, int t);
+void				show_content(char *dir_name, int r, t_option *option);
+void				recursive_check(char *name, t_option *option);
+t_option			*check_option(char **v, t_option *option);
+t_option			*check_option2(char **v, t_option *option, int x);
+int					check_option3(char **v, t_option *option, int x);
+t_recursive			*recursive2(t_recursive *recursive,
+					char *name, t_option *option);
 
 #endif

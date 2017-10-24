@@ -69,7 +69,8 @@ char	**parsing(char *dir_name, int t)
 	char			*str = NULL;
 	char			**tab;
 	int				a = 0;
-	int				b = 0;
+    int				b = 0;
+    
 	dir = opendir(dir_name);
 	if (dir == NULL)
 	{

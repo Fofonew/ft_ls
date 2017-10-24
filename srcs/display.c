@@ -24,7 +24,7 @@ t_display	*show_content_master(char *dir_name, int r, t_display *display, t_opti
 		show_content2(dir_name, r, display, option);
 	if (option->optionr)
 		if (display->i == 0)
-			break ;
+			return (1);
 	if (option->optionr)
 		display->i--;
 	else
@@ -38,7 +38,7 @@ t_display	*show_content6(char *dir_name, int r, t_display *display, t_option *op
 	{
 		display->stop++;
 		if (display->stop == 2)
-			break ;
+			return (1);
 	}
 	if (display->t < 4)
 		display->t++;
@@ -60,8 +60,8 @@ t_display	*show_content5(char *dir_name, int r, t_display *display, t_option *op
 	display->tmp = ctime(&display->buf.st_ctime);
 	display->time = ft_strnew(12);
 	while (display->tmp[display->t])
-		show_content2(dir_name, r, display, option);
-	}
+		if ((show_content6(dir_name, r, display, option)) == 1)
+			break ;
 	if (option->optiona)
 		printf("%u\t%lld\t%s ", display->buf.st_nlink, display->buf.st_size, display->time);
 	else
@@ -148,7 +148,8 @@ void		show_content(char *dir_name, int r, t_option *option)
 			printf("total %lld\n", display->bufc.st_blocks);
 		}
 		while (display->tab[display->i])
-			show_content_master(dir_name, r, display, option);
+			if ((show_content_master(dir_name, r, display, option)) == 1)
+				break ;
 	}
 	if (r == 1)
 		printf("\n");

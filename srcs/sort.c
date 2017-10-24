@@ -6,7 +6,7 @@
 /*   By: doriol <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 16:41:36 by doriol            #+#    #+#             */
-/*   Updated: 2017/10/24 18:27:51 by doriol           ###   ########.fr       */
+/*   Updated: 2017/10/24 20:33:26 by fofow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_sort	*sort_param_time2(t_sort *sort)
 	{
 		stat(sort->tab[sort->i], &buf);
 		stat(sort->tab[sort->i + 1], &buf2);
-		if ((buf.st_mtime) < (buf2.st_mtime))
+		if ((buf.st_ctime) < (buf2.st_ctime))
 		{
 			tmp = sort->tab[sort->i];
 			sort->tab[sort->i] = sort->tab[sort->i + 1];

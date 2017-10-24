@@ -6,7 +6,7 @@
 /*   By: doriol <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 16:46:16 by doriol            #+#    #+#             */
-/*   Updated: 2017/10/24 16:52:02 by doriol           ###   ########.fr       */
+/*   Updated: 2017/10/24 19:31:12 by doriol           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	show_content(char *dir_name, int r, t_option *option)
 	int				t;
 	int				t2;
 	int				stop;
+	static int		first;
 
 	i = 0;
 	tab = parsing(dir_name, option->optiont);
@@ -43,9 +44,6 @@ void	show_content(char *dir_name, int r, t_option *option)
 		}
 		while (tab[i])
 		{
-			if (option->optionr)
-				if (i == 0)
-					break ;
 			if (option->optionl)
 			{
 				t = 0;
@@ -81,14 +79,56 @@ void	show_content(char *dir_name, int r, t_option *option)
 				}
 			}
 			if (option->optiona)
-				printf("%s\n", tab[i]);
+			{
+				if (option->optionrr)
+				{
+					if (first)
+						printf("\n%s", tab[i]);
+					else
+					{
+						printf("%s", tab[i]);
+						first = 1;
+					}
+				}
+				else
+					printf("%s\n", tab[i]);
+			}
 			else if (r)
 			{
 				if (tab[i][0] != '.')
-					printf("%s\n", tab[i]);
+				{
+					if (option->optionrr)
+					{
+						if (first)
+							printf("\n%s", tab[i]);
+						else
+						{
+							printf("%s", tab[i]);
+							first = 1;
+						}
+					}
+					else
+						printf("%s\n", tab[i]);
+				}
 			}
 			else if (tab[i][0] != '.')
-				printf("%s\n", tab[i]);
+			{
+				if (option->optionrr)
+				{
+					if (first)
+						printf("\n%s", tab[i]);
+					else
+					{
+						printf("%s", tab[i]);
+						first = 1;
+					}
+				}
+				else
+					printf("%s\n", tab[i]);
+			}
+			if (option->optionr)
+				if (i == 0)
+					break ;
 			if (option->optionr)
 				i--;
 			else

@@ -6,34 +6,41 @@
 /*   By: fofow <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 09:16:35 by fofow             #+#    #+#             */
-/*   Updated: 2017/10/24 16:53:25 by doriol           ###   ########.fr       */
+/*   Updated: 2017/10/24 19:08:29 by doriol           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls.h"
 
+t_recursive	*recursive2(t_recursive *recursive, char *name, t_option *option)
+{
+	static int	a;
+
+	if (a)
+		printf("\n%s:", name);
+	a = 1;
+	show_content(name, 1, option);
+	recursive->dir = opendir(name);
+	if (recursive->dir == NULL)
+	{
+		perror("");
+		recursive->b = 1;
+	}
+	return (recursive);
+}
+
 void		recursive_check(char *name, t_option *option)
 {
 	struct dirent	*dirent;
-	DIR				*dir;
-	static int		a;
+	t_recursive		*recursive;
 	char			*s;
-	int				b;
 
-	b = 0;
-	if (a)
-		printf("%s:\n", name);
-	a = 1;
-	show_content(name, 1, option);
-	dir = opendir(name);
-	if (dir == NULL)
+	recursive = malloc(sizeof(t_recursive));
+	recursive->b = 0;
+	recursive2(recursive, name, option);
+	if (recursive->b != 1)
 	{
-		perror("");
-		b = 1;
-	}
-	if (b != 1)
-	{
-		while ((dirent = readdir(dir)) != NULL)
+		while ((dirent = readdir(recursive->dir)) != NULL)
 		{
 			if (dirent->d_type == 4 && dirent->d_name[0] != '.')
 			{
@@ -42,7 +49,7 @@ void		recursive_check(char *name, t_option *option)
 				recursive_check(s, option);
 			}
 		}
-		closedir(dir);
+		closedir(recursive->dir);
 	}
 }
 

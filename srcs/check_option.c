@@ -6,7 +6,7 @@
 /*   By: doriol <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 16:37:24 by doriol            #+#    #+#             */
-/*   Updated: 2017/10/24 16:54:04 by doriol           ###   ########.fr       */
+/*   Updated: 2017/10/24 19:22:36 by doriol           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,12 @@ t_option	*check_option2(char **v, t_option *option, int x)
 	return (option);
 }
 
-int			check_option3(char **v, t_option *option, int x, int e)
+int			check_option3(char **v, t_option *option, int x)
 {
 	static	int	secondpass;
+	static	int	e;
 
+	e = 0;
 	secondpass = 0;
 	if (option->optionrr == 1)
 		recursive_check(v[x], option);
@@ -53,31 +55,26 @@ int			check_option3(char **v, t_option *option, int x, int e)
 		if (e)
 			printf("\n");
 		e = 1;
-		if (v[x][0] != '.')
-			printf("%s:\n", v[x]);
 		show_content(v[x], 0, option);
 	}
-	secondpass = 1;
-	return (e);
+	return (1);
 }
 
 t_option	*check_option(char **v, t_option *option)
 {
 	int			x;
 	int			secondpass;
-	static int	e;
 	int			y;
 
 	x = 1;
 	secondpass = 0;
-	e = 0;
 	while (v[x])
 	{
 		y = 1;
 		if (v[x][0] == '-')
 			check_option2(v, option, x);
 		else
-			check_option3(v, option, x, e);
+			secondpass = check_option3(v, option, x);
 		x++;
 	}
 	if (v[x - 1][0] == '-' && option->optionrr != 1)

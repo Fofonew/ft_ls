@@ -6,7 +6,7 @@
 /*   By: fofow <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 23:09:24 by fofow             #+#    #+#             */
-/*   Updated: 2017/10/24 16:55:32 by doriol           ###   ########.fr       */
+/*   Updated: 2017/10/24 18:35:31 by doriol           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,35 @@
 # include <unistd.h>
 # include <time.h>
 
+typedef struct	s_parse
+{
+	char		*str;
+	char		**tab;
+	int			a;
+	int			b;
+}				t_parse;
+
+typedef	struct	s_recursive
+{
+	int			b;
+	DIR			*dir;
+}				t_recursive;
+
+typedef struct	s_sort
+{
+	int			i;
+	char		**tab;
+	int			power;
+}				t_sort;
+
 typedef	struct	s_option
 {
-	int	optionrr;
-	int	optiona;
-	int	optionr;
-	int	optionl;
-	int	optiont;
-	int	y;
+	int			optionrr;
+	int			optiona;
+	int			optionr;
+	int			optionl;
+	int			optiont;
+	int			y;
 }				t_option;
 
 char			**sort_param_time(char **tab);
@@ -40,6 +61,8 @@ void			show_content(char *dir_name, int r, t_option *option);
 void			recursive_check(char *name, t_option *option);
 t_option		*check_option(char **v, t_option *option);
 t_option		*check_option2(char **v, t_option *option, int x);
-int				check_option3(char **v, t_option *option, int x, int e);
+int				check_option3(char **v, t_option *option, int x);
+t_recursive		*recursive2(t_recursive *recursive,
+				char *name, t_option *option);
 
 #endif

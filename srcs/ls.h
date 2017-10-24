@@ -6,7 +6,7 @@
 /*   By: fofow <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 23:09:24 by fofow             #+#    #+#             */
-/*   Updated: 2017/10/24 21:22:00 by fofow            ###   ########.fr       */
+/*   Updated: 2017/10/24 21:36:49 by fofow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ t_display			*show_content3(char *dir_name, int r, t_display *display,
 					t_option *option);
 t_display			*show_content2(char *dir_name, int r, t_display *display,
 					t_option *option);
-t_display			*set(t_display *display);
+t_display			*set_display(t_display *display, char *dir_name,
+					t_option *option);
 char				**sort_param_time(char **tab);
 char				**sort_param(char **tab);
 char				**parsing(char *dir_name, int t);

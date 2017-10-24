@@ -6,7 +6,7 @@
 /*   By: doriol <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 16:46:16 by doriol            #+#    #+#             */
-/*   Updated: 2017/10/24 20:51:52 by fofow            ###   ########.fr       */
+/*   Updated: 2017/10/24 21:35:33 by fofow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_display	*show_content5(char *dir_name, int r, t_display *display, t_option *op
 	display->time = ft_strnew(12);
 	while (display->tmp[display->t])
 	{
-		show_content6(dir_name, r, display, option)
+		show_content6(dir_name, r, display, option);
 		if (display->breakk == 1)
 			break ;
 	}
@@ -136,7 +136,7 @@ t_display	*show_content2(char *dir_name, int r, t_display *display, t_option *op
 	return (display);
 }
 
-t_display	*set(t_display *display)
+t_display	*set_display(t_display *display, char *dir_name, t_option *option)
 {
 	display->i = 0;
 	display->tab = parsing(dir_name, option->optiont);
@@ -149,6 +149,7 @@ void		show_content(char *dir_name, int r, t_option *option)
 	t_display			*display;
 
 	display = malloc(sizeof(t_display));
+	set_display(display, dir_name, option);
 	if (display->tab != NULL)
 	{
 		if (option->optionr)
@@ -164,7 +165,7 @@ void		show_content(char *dir_name, int r, t_option *option)
 		}
 		while (display->tab[display->i])
 		{
-			show_content_master(dir_name, r, display, option)
+			show_content_master(dir_name, r, display, option);
 			if (display->breakk == 1)
 				break ;
 		}

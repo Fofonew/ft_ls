@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sort.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: doriol <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/10/24 16:41:36 by doriol            #+#    #+#             */
+/*   Updated: 2017/10/24 16:45:52 by doriol           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ls.h"
 
 char	**sort_param_time(char **tab)
 {
-	int		i;
-	char	*tmp;
-	int		power;
-	struct stat buf;
-	struct stat buf2;
+	int			i;
+	char		*tmp;
+	int			power;
+	struct stat	buf;
+	struct stat	buf2;
 
 	power = 1;
 	while (power)
@@ -15,10 +27,8 @@ char	**sort_param_time(char **tab)
 		i = 1;
 		while (tab[i])
 		{
-
 			if (tab[i + 1] != '\0')
 			{
-
 				stat(tab[i], &buf);
 				stat(tab[i + 1], &buf2);
 				if ((buf.st_mtime) < (buf2.st_mtime))
@@ -66,11 +76,14 @@ char	**parsing(char *dir_name, int t)
 {
 	struct dirent	*dirent;
 	DIR				*dir;
-	char			*str = NULL;
+	char			*str;
 	char			**tab;
-	int				a = 0;
-    int				b = 0;
-    
+	int				a;
+	int				b;
+
+	a = 0;
+	b = 0;
+	str = NULL;
 	dir = opendir(dir_name);
 	if (dir == NULL)
 	{
@@ -96,7 +109,7 @@ char	**parsing(char *dir_name, int t)
 		else
 			sort_param(tab);
 		closedir(dir);
-		return(tab);
+		return (tab);
 	}
 	return (NULL);
 }

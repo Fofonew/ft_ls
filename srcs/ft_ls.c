@@ -6,18 +6,18 @@
 /*   By: fofow <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 09:16:35 by fofow             #+#    #+#             */
-/*   Updated: 2017/10/24 00:21:48 by fofow            ###   ########.fr       */
+/*   Updated: 2017/10/24 16:53:25 by doriol           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls.h"
 
-void	recursive_check(char *name, t_option *option)
+void		recursive_check(char *name, t_option *option)
 {
 	struct dirent	*dirent;
 	DIR				*dir;
 	static int		a;
-	char 			*s;
+	char			*s;
 	int				b;
 
 	b = 0;
@@ -48,7 +48,7 @@ void	recursive_check(char *name, t_option *option)
 
 t_option	*set(t_option *option)
 {
-	option->optionR = 0;
+	option->optionrr = 0;
 	option->optiona = 0;
 	option->optionr = 0;
 	option->optionl = 0;
@@ -56,7 +56,7 @@ t_option	*set(t_option *option)
 	return (option);
 }
 
-int		main(int a, char **v)
+int			main(int a, char **v)
 {
 	t_option	*option;
 

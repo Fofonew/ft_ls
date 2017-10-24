@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   display.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: doriol <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/10/24 16:46:16 by doriol            #+#    #+#             */
+/*   Updated: 2017/10/24 16:52:02 by doriol           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ls.h"
 
-void	show_content(char *dir_name, int R, t_option *option)
+void	show_content(char *dir_name, int r, t_option *option)
 {
 	struct dirent	*dirent;
 	DIR				*dir;
@@ -12,16 +24,15 @@ void	show_content(char *dir_name, int R, t_option *option)
 	char			*tmp;
 	int				t;
 	int				t2;
-	int 			stop;
+	int				stop;
 
 	i = 0;
-
 	tab = parsing(dir_name, option->optiont);
 	if (tab != NULL)
 	{
 		if (option->optionr)
 		{
-			while(tab[i])
+			while (tab[i])
 				i++;
 			i -= 1;
 		}
@@ -34,7 +45,7 @@ void	show_content(char *dir_name, int R, t_option *option)
 		{
 			if (option->optionr)
 				if (i == 0)
-					break;
+					break ;
 			if (option->optionl)
 			{
 				t = 0;
@@ -43,13 +54,13 @@ void	show_content(char *dir_name, int R, t_option *option)
 				lstat(tab[i], &buf);
 				tmp = ctime(&buf.st_ctime);
 				time = ft_strnew(12);
-				while(tmp[t])
+				while (tmp[t])
 				{
 					if (tmp[t] == ':')
 					{
 						stop++;
 						if (stop == 2)
-							break;
+							break ;
 					}
 					if (t < 4)
 						t++;
@@ -63,12 +74,15 @@ void	show_content(char *dir_name, int R, t_option *option)
 				if (option->optiona)
 					printf("%u\t%lld\t%s ", buf.st_nlink, buf.st_size, time);
 				else
+				{
 					if (tab[i][0] != '.')
-						printf("%u\t%lld\t%s ", buf.st_nlink, buf.st_size, time);
+						printf("%u\t%lld\t%s ", buf.st_nlink, \
+								buf.st_size, time);
+				}
 			}
 			if (option->optiona)
 				printf("%s\n", tab[i]);
-			else if (R)
+			else if (r)
 			{
 				if (tab[i][0] != '.')
 					printf("%s\n", tab[i]);
@@ -81,6 +95,6 @@ void	show_content(char *dir_name, int R, t_option *option)
 				i++;
 		}
 	}
-	if (R == 1)
+	if (r == 1)
 		printf("\n");
 }

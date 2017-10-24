@@ -51,8 +51,8 @@ void	show_content(char *dir_name, int r, t_option *option)
 				display->t = 0;
 				display->t2 = 0;
 				display->stop = 0;
-				lstat(display->tab[display->i], display->&buf);
-				display->tmp = ctime(display->&buf.st_ctime);
+				lstat(display->tab[display->i], &display->buf);
+				display->tmp = ctime(&display->buf.st_ctime);
 				display->time = ft_strnew(12);
 				while (display->tmp[display->t])
 				{

@@ -12,7 +12,7 @@
 
 #include "ls.h"
 
-t_display	*show_content5(char *dir_name, int r, t_display *display)
+t_display	*show_content5(char *dir_name, int r, t_display *display, t_option *option)
 {
 	display->t = 0;
 	display->t2 = 0;
@@ -48,7 +48,7 @@ t_display	*show_content5(char *dir_name, int r, t_display *display)
 	return (display);
 }
 
-t_display	*show_content4(char *dir_name, int r, t_display *display)
+t_display	*show_content4(char *dir_name, int r, t_display *display, t_option *option)
 {
 	if (option->optionrr)
 	{
@@ -65,7 +65,7 @@ t_display	*show_content4(char *dir_name, int r, t_display *display)
 	return (display);
 }
 
-t_display	*show_content3(char *dir_name, int r, t_display *display)
+t_display	*show_content3(char *dir_name, int r, t_display *display, t_option *option)
 {
 	if (display->tab[display->i][0] != '.')
 	{
@@ -85,7 +85,7 @@ t_display	*show_content3(char *dir_name, int r, t_display *display)
 	return (display);
 }
 
-t_display	*show_content2(char *dir_name, int r, t_display *display)
+t_display	*show_content2(char *dir_name, int r, t_display *display, t_option *option)
 {
 	else if (display->tab[display->i][0] != '.')
 	{
@@ -136,7 +136,7 @@ void		show_content(char *dir_name, int r, t_option *option)
 		{
 			if (option->optionl)
 			{
-				show_content5(dir_name, r, display);
+				show_content5(dir_name, r, display, option);
 				/*display->t = 0;
 				display->t2 = 0;
 				display->stop = 0;
@@ -171,7 +171,7 @@ void		show_content(char *dir_name, int r, t_option *option)
 			}
 			if (option->optiona)
 			{
-				show_content4(dir_name, r, display);
+				show_content4(dir_name, r, display, option);
 				/*if (option->optionrr)
 				{
 					if (display->first)
@@ -187,7 +187,7 @@ void		show_content(char *dir_name, int r, t_option *option)
 			}
 			else if (r)
 			{
-				show_content3(dir_name, r, display);
+				show_content3(dir_name, r, display, option);
 				/*if (display->tab[display->i][0] != '.')
 				{
 					if (option->optionrr)
@@ -204,7 +204,7 @@ void		show_content(char *dir_name, int r, t_option *option)
 						printf("%s\n", display->tab[display->i]);
 				}*/
 			}
-			show_content2(dir_name, r, display);
+			show_content2(dir_name, r, display, option);
 			/*else if (display->tab[display->i][0] != '.')
 			{
 				if (option->optionrr)

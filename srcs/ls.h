@@ -6,7 +6,7 @@
 /*   By: fofow <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 23:09:24 by fofow             #+#    #+#             */
-/*   Updated: 2017/10/24 18:35:31 by doriol           ###   ########.fr       */
+/*   Updated: 2017/10/24 20:25:58 by fofow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct	s_display
 	int			t2;
 	int			stop;
 	struct dirent	*dirent;
-	dir			*dir;
+	DIR			*dir;
 }				t_display;
 
 typedef struct	s_sort

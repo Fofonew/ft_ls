@@ -6,7 +6,7 @@
 /*   By: doriol <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 16:46:16 by doriol            #+#    #+#             */
-/*   Updated: 2017/10/24 19:31:12 by doriol           ###   ########.fr       */
+/*   Updated: 2017/10/24 20:28:08 by fofow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	show_content(char *dir_name, int r, t_option *option)
 		}
 		if (option->optionl)
 		{
-			lstat(display->tab[display->i], display->&bufc);
+			lstat(display->tab[display->i], &display->bufc);
 			printf("total %lld\n", display->bufc.st_blocks);
 		}
 		while (display->tab[display->i])

@@ -6,7 +6,7 @@
 /*   By: fofow <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 23:09:24 by fofow             #+#    #+#             */
-/*   Updated: 2017/10/25 11:35:05 by fofow            ###   ########.fr       */
+/*   Updated: 2017/10/25 18:37:52 by fofow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef	struct		s_option
 	int				y;
 }					t_option;
 
+void				print_rights(t_display *file);
 t_display			*counter(t_display *display, t_option *option);
 t_display			*show8(t_option *option, t_display *display, int r);
 t_display			*show6(t_option *option, t_display *display);

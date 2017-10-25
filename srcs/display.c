@@ -92,15 +92,6 @@ t_display	*show8(t_option *option, t_display *display, int r)
 	return (display);
 }
 
-t_display	*counter(t_display *display, t_option *option)
-{
-	if (option->optionr)
-		display->i--;
-	else
-		display->i++;
-	return (display);
-}
-
 void		show_content(char *dir_name, int r, t_option *option)
 {
 	t_display		*display;

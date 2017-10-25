@@ -68,3 +68,12 @@ t_display	*show7(t_option *option, t_display *display, int first2)
 	}
 	return (display);
 }
+
+t_display	*counter(t_display *display, t_option *option)
+{
+	if (option->optionr)
+		display->i--;
+	else
+		display->i++;
+	return (display);
+}

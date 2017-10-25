@@ -72,6 +72,8 @@ typedef	struct		s_option
 	int				y;
 }					t_option;
 
+t_display			*counter(t_display *display, t_option *option);
+t_display			*show8(t_option *option, t_display *display, int r);
 t_display			*show6(t_option *option, t_display *display);
 t_display			*show5(t_option *option, t_display *display, int first);
 t_display			*show2(t_option *option, t_display *display);

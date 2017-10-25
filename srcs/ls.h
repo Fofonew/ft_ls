@@ -72,10 +72,16 @@ typedef	struct		s_option
 	int				y;
 }					t_option;
 
-t_display			*show_content2(t_display *display, char *dir_name, t_option *option, int r);
-t_display			*show_content3(t_display *display, char *dir_name, t_option *option, int r);
-t_display			*show_content4(t_display *display, char *dir_name, t_option *option, int r);
-t_display			*show_content5(t_display *display, char *dir_name, t_option *option, int r);
+t_display			*show6(t_option *option, t_display *display);
+t_display			*show5(t_option *option, t_display *display, int first);
+t_display			*show2(t_option *option, t_display *display);
+t_display			*show4(t_option *option, t_display *display, int first);
+t_display			*show3(t_option *option, t_display *display, int first2);
+t_display			*copy(t_display *display);
+t_display			*set_display_time(t_display *display);
+t_display			*set_display(t_display *display, t_option *option, char *dir_name);
+t_display			*copy_master(t_display *display);
+t_display			*show7(t_option *option, t_display *display, int first2);
 char				**sort_param_time(char **tab);
 char				**sort_param(char **tab);
 char				**parsing(char *dir_name, int t);

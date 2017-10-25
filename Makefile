@@ -16,11 +16,15 @@ SRCS = ./srcs/ft_ls.c\
 	   ./srcs/check_option.c\
 	   ./srcs/display.c\
 	   ./srcs/sort.c\
+	   ./srcs/set.c\
+	   ./srcs/display2.c\
 
 SRCS2 = ft_ls.o\
 		check_option.o\
 		display.o\
 		sort.o\
+		set.o\
+		display2.o\
 
 all: $(NAME)
 

@@ -6,7 +6,7 @@
 /*   By: fofow <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 23:09:24 by fofow             #+#    #+#             */
-/*   Updated: 2017/10/24 21:36:49 by fofow            ###   ########.fr       */
+/*   Updated: 2017/10/25 11:35:05 by fofow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ typedef	struct		s_recursive
 
 typedef struct		s_display
 {
-	int				first;
 	int				i;
 	char			**tab;
 	struct stat		buf;
@@ -52,6 +51,8 @@ typedef struct		s_display
 	struct dirent	*dirent;
 	DIR				*dir;
 	int				breakk;
+	int				check_first2;
+	int				check_first;
 }					t_display;
 
 typedef struct		s_sort

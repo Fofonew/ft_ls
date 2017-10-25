@@ -6,7 +6,7 @@
 /*   By: doriol <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 16:46:16 by doriol            #+#    #+#             */
-/*   Updated: 2017/10/25 13:23:12 by fofow            ###   ########.fr       */
+/*   Updated: 2017/10/25 16:06:00 by fofow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,31 @@ t_display	*show4(t_option *option, t_display *display, int first)
 	return (display);
 }
 
+t_display	*show8(t_option *option, t_display *display, int r)
+{
+	if (option->optionl)
+	{
+		set_display_time(display);
+		show7(option, display, display->check_first2);
+	}
+	if (option->optiona)
+		show3(option, display, display->check_first2);
+	if (r && !(option->optiona))
+		show5(option, display, display->check_first);
+	else if (display->tab[display->i][0] != '.' && !(option->optiona) && !(r))
+		show4(option, display, display->check_first);
+	return (display);
+}
+
+t_display	*counter(t_display *display, t_option *option)
+{
+	if (option->optionr)
+		display->i--;
+	else
+		display->i++;
+	return (display);
+}
+
 void		show_content(char *dir_name, int r, t_option *option)
 {
 	t_display		*display;
@@ -89,32 +114,15 @@ void		show_content(char *dir_name, int r, t_option *option)
 		show2(option, display);		
 		while (display->tab[display->i])
 		{
-			if (option->optionl)
-			{
-				set_display_time(display);
-				show7(option, display, first2);
-				if(display->check_first2)
-					first2 = display->check_first2;
-			}
-			if (option->optiona)
-				show3(option, display, first2);
-			if (display->check_first2)
-				first2 = display->check_first2;
-			if (r && !(option->optiona))
-				show5(option, display, first);
-			if (display->check_first)
-				first = display->check_first;
-			else if (display->tab[display->i][0] != '.' && !(option->optiona) && !(r))
-				show4(option, display, first);
-			if (display->check_first)
-				first = display->check_first;
+			show8(option, display, r);
 			if (option->optionr)
 				if (display->i == 0)
 					break ;
-			if (option->optionr)
-				display->i--;
-			else
-				display->i++;
+			counter(display, option);
+			if (display->check_first)
+				first = display->check_first;
+			if (display->check_first2)
+				first2 = display->check_first2;
 		}
 	}
 	if (r && !(option->optionl))

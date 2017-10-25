@@ -6,7 +6,7 @@
 /*   By: doriol <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 16:41:36 by doriol            #+#    #+#             */
-/*   Updated: 2017/10/24 20:33:26 by fofow            ###   ########.fr       */
+/*   Updated: 2017/10/25 15:41:54 by fofow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ char	**parsing(char *dir_name, int t)
 	t_parse			*parse;
 
 	parse = malloc(sizeof(t_parse));
+	dirent = NULL;
 	parse->a = 0;
 	parse->b = 0;
 	parse->str = NULL;

@@ -6,7 +6,7 @@
 /*   By: fofow <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 09:16:35 by fofow             #+#    #+#             */
-/*   Updated: 2017/10/25 09:23:47 by fofow            ###   ########.fr       */
+/*   Updated: 2017/10/25 15:58:10 by fofow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,12 @@ t_recursive	*recursive2(t_recursive *recursive, char *name, t_option *option)
 	static int	a;
 
 	if (a)
-		printf("\n%s:", name);
+	{
+		if (option->optionl)
+			printf("\n%s:", name);
+		else
+			printf("\n%s:\n", name);
+	}
 	a = 1;
 	show_content(name, 1, option);
 	recursive->dir = opendir(name);

@@ -6,7 +6,7 @@
 #    By: doriol <doriol@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/28 04:00:07 by doriol            #+#    #+#              #
-#    Updated: 2017/10/24 16:30:14 by doriol           ###   ########.fr        #
+#    Updated: 2017/10/25 15:39:59 by fofow            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,11 +30,11 @@ all: $(NAME)
 
 $(NAME):
 	@make -C libft/ fclean && make -C libft/
-	@gcc -I libft/includes/ -c $(SRCS)
+	@gcc -Wall -Wextra -Werror -I libft/includes/ -c $(SRCS)
 	@gcc -o $(NAME) $(SRCS2) libft/libft.a -I ./srcs/ls.h
 	@mkdir obj
 	@mv *.o obj/
-	@echo "\033[32mft_ls compiled without flag !!! [ ✔ ]"
+	@echo "\033[32mft_ls compiled [ ✔ ]"
 
 clean:
 	@rm -rf obj/

@@ -6,7 +6,7 @@
 /*   By: doriol <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 16:37:24 by doriol            #+#    #+#             */
-/*   Updated: 2017/11/21 13:27:47 by doriol           ###   ########.fr       */
+/*   Updated: 2017/11/21 14:31:25 by doriol           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,22 @@ t_option	*check_option(char **v, t_option *option)
 	else if (secondpass != 1)
 		show_content(v[x - 1], 0, option);
 	return (option);
+}
+
+void	print_total(t_display *display, char *path, char c)
+{
+	int		total;
+	int		i;
+	char	*tmp;
+
+	total = 0;
+	i = 0;
+	while (display->tab[i])
+	{
+		tmp = ft_strjoin(path, "/");
+		tmp = ft_strjoin(tmp, display->tab[i++]);
+		lstat(tmp, &display->buf);
+		total += display->buf.st_blocks;
+	}
+	printf("%ctotal %d\n", c, total);
 }

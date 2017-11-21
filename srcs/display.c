@@ -6,7 +6,7 @@
 /*   By: doriol <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 16:46:16 by doriol            #+#    #+#             */
-/*   Updated: 2017/11/21 14:16:27 by doriol           ###   ########.fr       */
+/*   Updated: 2017/11/21 14:31:06 by doriol           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ t_display	*show2(t_option *option, t_display *display)
 		path = ft_strjoin(path, display->tab[display->i]);
 		lstat(path, &display->bufc);
 		if (first3)
-			printf("\ntotal %lld\n", display->bufc.st_blocks);
+			print_total(display, option->s, '\n');
 		else
 		{
-			printf("total %lld\n", display->bufc.st_blocks);
+			print_total(display, option->s, 0);
 			first3 = 1;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: fofow <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 15:31:55 by fofow             #+#    #+#             */
-/*   Updated: 2017/10/25 18:41:55 by fofow            ###   ########.fr       */
+/*   Updated: 2017/11/21 14:16:01 by doriol           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,19 +63,22 @@ t_display	*show5(t_option *option, t_display *display, int first)
 
 t_display	*show6(t_option *option, t_display *display)
 {
-
+	ft_print_groups(display);
 	if (option->optiona)
 	{
 		print_rights(display);
-		printf("\t%u\t%lld\t%s ", display->buf.st_nlink, display->buf.st_size, display->time);
+		printf("%7u %s %s\t%lld\t%s ", display->buf.st_nlink, display->pwd\
+			->pw_name, display->grp->gr_name, \
+			display->buf.st_size, display->time);
 	}
 	else
 	{
 		if (display->tab[display->i][0] != '.')
 		{
 			print_rights(display);
-			printf("\t%u\t%lld\t%s ", display->buf.st_nlink, \
-					display->buf.st_size, display->time);
+			printf("%7u %s %s\t%lld\t%s ", display->buf.st_nlink, display->pwd\
+				->pw_name, display->grp->gr_name, \
+				display->buf.st_size, display->time);
 		}
 	}
 	return (display);
@@ -87,7 +90,8 @@ t_display	*show7(t_option *option, t_display *display, int first2)
 	if (first2 && !(option->optionl))
 	{
 		if (option->optiona)
-			printf("\n%u\t%lld\t%s ", display->buf.st_nlink, display->buf.st_size, display->time);
+			printf("\n%u\t%lld\t%s ", display->buf.st_nlink, \
+					display->buf.st_size, display->time);
 		else
 		{
 			if (display->tab[display->i][0] != '.')

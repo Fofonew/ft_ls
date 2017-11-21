@@ -6,7 +6,7 @@
 /*   By: fofow <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 23:09:24 by fofow             #+#    #+#             */
-/*   Updated: 2017/10/25 18:37:52 by fofow            ###   ########.fr       */
+/*   Updated: 2017/11/21 14:14:04 by doriol           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <sys/stat.h>
 # include <unistd.h>
 # include <time.h>
+# include <pwd.h>
+# include <grp.h>
 
 typedef struct		s_parse
 {
@@ -53,6 +55,9 @@ typedef struct		s_display
 	int				breakk;
 	int				check_first2;
 	int				check_first;
+	char			*path;
+	struct passwd	*pwd;
+	struct group	*grp;
 }					t_display;
 
 typedef struct		s_sort
@@ -70,8 +75,11 @@ typedef	struct		s_option
 	int				optionl;
 	int				optiont;
 	int				y;
+	char			*s;
+	char			*name;
 }					t_option;
 
+void				ft_print_groups(t_display *display);
 void				print_rights(t_display *file);
 t_display			*counter(t_display *display, t_option *option);
 t_display			*show8(t_option *option, t_display *display, int r);
@@ -81,8 +89,9 @@ t_display			*show2(t_option *option, t_display *display);
 t_display			*show4(t_option *option, t_display *display, int first);
 t_display			*show3(t_option *option, t_display *display, int first2);
 t_display			*copy(t_display *display);
-t_display			*set_display_time(t_display *display);
-t_display			*set_display(t_display *display, t_option *option, char *dir_name);
+t_display			*set_display_time(t_option *option, t_display *display);
+t_display			*set_display(t_display *display,
+					t_option *option, char *dir_name);
 t_display			*copy_master(t_display *display);
 t_display			*show7(t_option *option, t_display *display, int first2);
 char				**sort_param_time(char **tab);

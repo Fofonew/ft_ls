@@ -6,7 +6,7 @@
 /*   By: fofow <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 09:16:35 by fofow             #+#    #+#             */
-/*   Updated: 2017/10/25 15:58:10 by fofow            ###   ########.fr       */
+/*   Updated: 2017/11/21 13:33:41 by doriol           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void		recursive_check(char *name, t_option *option)
 {
 	struct dirent	*dirent;
 	t_recursive		*recursive;
-	char			*s;
 
 	recursive = malloc(sizeof(t_recursive));
 	recursive->b = 0;
@@ -49,9 +48,9 @@ void		recursive_check(char *name, t_option *option)
 		{
 			if (dirent->d_type == 4 && dirent->d_name[0] != '.')
 			{
-				s = ft_strjoin(name, "/");
-				s = ft_strjoin(s, dirent->d_name);
-				recursive_check(s, option);
+				option->s = ft_strjoin(name, "/");
+				option->s = ft_strjoin(option->s, dirent->d_name);
+				recursive_check(option->s, option);
 			}
 		}
 		closedir(recursive->dir);

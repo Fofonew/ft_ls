@@ -6,7 +6,7 @@
 /*   By: doriol <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 16:46:16 by doriol            #+#    #+#             */
-/*   Updated: 2017/10/25 16:06:00 by fofow            ###   ########.fr       */
+/*   Updated: 2017/11/21 14:16:27 by doriol           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 t_display	*show2(t_option *option, t_display *display)
 {
 	static int	first3;
+	char		*path;
 
 	if (option->optionr)
 	{
@@ -24,7 +25,9 @@ t_display	*show2(t_option *option, t_display *display)
 	}
 	if (option->optionl)
 	{
-		lstat(display->tab[display->i], &display->bufc);
+		path = ft_strjoin(option->s, "/");
+		path = ft_strjoin(path, display->tab[display->i]);
+		lstat(path, &display->bufc);
 		if (first3)
 			printf("\ntotal %lld\n", display->bufc.st_blocks);
 		else
@@ -80,7 +83,7 @@ t_display	*show8(t_option *option, t_display *display, int r)
 {
 	if (option->optionl)
 	{
-		set_display_time(display);
+		set_display_time(option, display);
 		show7(option, display, display->check_first2);
 	}
 	if (option->optiona)
@@ -102,7 +105,7 @@ void		show_content(char *dir_name, int r, t_option *option)
 	set_display(display, option, dir_name);
 	if (display->tab != NULL)
 	{
-		show2(option, display);		
+		show2(option, display);
 		while (display->tab[display->i])
 		{
 			show8(option, display, r);

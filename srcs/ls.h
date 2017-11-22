@@ -6,7 +6,7 @@
 /*   By: fofow <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 23:09:24 by fofow             #+#    #+#             */
-/*   Updated: 2017/11/21 14:31:23 by doriol           ###   ########.fr       */
+/*   Updated: 2017/11/22 16:18:08 by fofow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <sys/dir.h>
 # include <stdio.h>
 # include "libft.h"
+# include "printf.h"
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <unistd.h>

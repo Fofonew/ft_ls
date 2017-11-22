@@ -62,6 +62,7 @@ LIB = ft_atoi.c \
 	  ft_lstpush.c \
 	  ft_freeret.c \
 	  ft_wchar.c \
+	  get_next_line.c \
 
 PRINTF = ft_printf.c \
 		 ft_format.c \
@@ -74,7 +75,7 @@ PRINTF = ft_printf.c \
 OBJ = $(addprefix libft/, $(LIB:.c=.o))
 PF_OBJ = $(addprefix printf/, $(PRINTF:.c=.o))
 
-NAME = libftprintf.a
+NAME = libft.a
 CC = gcc
 FLAGS = -Wall -Wextra -Werror
 INCS = includes
@@ -83,22 +84,17 @@ all: $(NAME)
 
 $(NAME): $(OBJ) $(PF_OBJ)
 	@ar -rsc $(NAME) $(OBJ) $(PF_OBJ)
-	@echo "[$(NAME)]"
 
 libft/%.o: libft/%.c
 	@$(CC) $(FLAGS) -I $(INCS) -o $@ -c $<
-	@echo "[$@]"
 
 printf/%.o: printf/%.c
 	@$(CC) $(FLAGS) -I $(INCS) -o $@ -c $<
-	@echo "[$@]"
 
 clean:
 	@rm -f $(OBJ) $(PF_OBJ)
-	@echo "[objs removed]"
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "[workspace clean]"
 
 re: fclean all

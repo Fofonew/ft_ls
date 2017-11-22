@@ -44,19 +44,19 @@ t_display	*show3(t_option *option, t_display *display, int first2)
 	if (option->optionrr)
 	{
 		if (option->optionl && option->optiona)
-			printf("%s\n", display->tab[display->i]);
+			ft_printf("%s\n", display->tab[display->i]);
 		else if (option->optionl)
-			printf("%s", display->tab[display->i]);
+			ft_printf("%s", display->tab[display->i]);
 		else if (first2)
-			printf("\n%s", display->tab[display->i]);
+			ft_printf("\n%s", display->tab[display->i]);
 		else
 		{
-			printf("%s", display->tab[display->i]);
+			ft_printf("%s", display->tab[display->i]);
 			display->check_first2 = 1;
 		}
 	}
 	else
-		printf("%s\n", display->tab[display->i]);
+		ft_printf("%s\n", display->tab[display->i]);
 	return (display);
 }
 
@@ -65,17 +65,17 @@ t_display	*show4(t_option *option, t_display *display, int first)
 	if (option->optionrr)
 	{
 		if (option->optionl)
-			printf("%s\n", display->tab[display->i]);
+			ft_printf("%s\n", display->tab[display->i]);
 		else if (first)
-			printf("\n%s", display->tab[display->i]);
+			ft_printf("\n%s", display->tab[display->i]);
 		else
 		{
-			printf("%s", display->tab[display->i]);
+			ft_printf("%s", display->tab[display->i]);
 			display->check_first = 1;
 		}
 	}
 	else
-		printf("%s\n", display->tab[display->i]);
+		ft_printf("%s\n", display->tab[display->i]);
 	return (display);
 }
 
@@ -120,5 +120,5 @@ void		show_content(char *dir_name, int r, t_option *option)
 		}
 	}
 	if (r && !(option->optionl))
-		printf("\n");
+		ft_printf("\n");
 }

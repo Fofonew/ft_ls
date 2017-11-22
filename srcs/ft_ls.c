@@ -19,9 +19,9 @@ t_recursive	*recursive2(t_recursive *recursive, char *name, t_option *option)
 	if (a)
 	{
 		if (option->optionl)
-			printf("\n%s:", name);
+			ft_printf("\n%s:", name);
 		else
-			printf("\n%s:\n", name);
+			ft_printf("\n%s:\n", name);
 	}
 	a = 1;
 	show_content(name, 1, option);

@@ -32,7 +32,7 @@ t_option	*check_option2(char **v, t_option *option, int x)
 		if (v[x][y] != 'R' && v[x][y] != 'r' && v[x][y] != 'a' &&
 				v[x][y] != 'l' && v[x][y] != 't')
 		{
-			printf("ft_ls: illegal option -- %c\nusage: ft_ls \
+			ft_printf("ft_ls: illegal option -- %c\nusage: ft_ls \
 					[-arRlt] [file ...]\n", v[x][y]);
 			exit(1);
 		}
@@ -53,7 +53,7 @@ int			check_option3(char **v, t_option *option, int x)
 	else
 	{
 		if (e)
-			printf("\n");
+			ft_printf("\n");
 		e = 1;
 		show_content(v[x], 0, option);
 	}
@@ -101,5 +101,5 @@ void	print_total(t_display *display, char *path, char c)
 		lstat(tmp, &display->buf);
 		total += display->buf.st_blocks;
 	}
-	printf("%ctotal %d\n", c, total);
+	ft_printf("%ctotal %d\n", c, total);
 }

@@ -29,9 +29,10 @@ SRCS2 = ft_ls.o\
 all: $(NAME)
 
 $(NAME):
+	@make -C ft_printf/ fclean && name -C ft_printf
 	@make -C libft/ fclean && make -C libft/
-	@gcc -Wall -Wextra -Werror -I libft/includes/ -c $(SRCS)
-	@gcc -o $(NAME) $(SRCS2) libft/libft.a -I ./srcs/ls.h
+	@gcc -Wall -Wextra -Werror -I libft/includes/ -I ft_printf/includes/ -c $(SRCS)
+	@gcc -o $(NAME) $(SRCS2) libft/libft.a ft_printf/ft_printf.a -I ./srcs/ls.h
 	@mkdir obj
 	@mv *.o obj/
 	@echo "\033[32mft_ls compiled [ ✔ ]"
@@ -39,6 +40,7 @@ $(NAME):
 clean:
 	@rm -rf obj/
 	@make -C libft/ fclean
+	@make -C ft_printf/ fclean
 	@echo "\033[32mft_ls cleaned [ ✔ ]"
 
 fclean: clean

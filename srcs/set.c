@@ -6,7 +6,7 @@
 /*   By: fofow <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 15:32:24 by fofow             #+#    #+#             */
-/*   Updated: 2017/11/21 14:18:26 by doriol           ###   ########.fr       */
+/*   Updated: 2017/11/22 10:45:02 by fofow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_display	*set_display_time(t_option *option, t_display *display)
 	display->stop = 0;
 	path = ft_strjoin(option->s, "/");
 	path = ft_strjoin(path, display->tab[display->i]);
-	lstat(path, &display->buf);
+	(option->s == NULL) ? lstat(display->tab[display->i], &display->buf) : lstat(path, &display->buf);
 	display->tmp = ctime(&display->buf.st_ctime);
 	display->time = ft_strnew(12);
 	display->path = path;

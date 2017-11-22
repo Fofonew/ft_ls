@@ -6,7 +6,7 @@
 /*   By: doriol <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 16:46:16 by doriol            #+#    #+#             */
-/*   Updated: 2017/11/21 14:31:06 by doriol           ###   ########.fr       */
+/*   Updated: 2017/11/22 10:47:09 by fofow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_display	*show2(t_option *option, t_display *display)
 			print_total(display, option->s, '\n');
 		else
 		{
-			print_total(display, option->s, 0);
+			print_total(display, display->tab[display->i], 0);
 			first3 = 1;
 		}
 	}

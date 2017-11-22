@@ -6,7 +6,7 @@
 /*   By: fofow <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 09:16:35 by fofow             #+#    #+#             */
-/*   Updated: 2017/11/22 11:15:41 by fofow            ###   ########.fr       */
+/*   Updated: 2017/11/22 11:18:42 by fofow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,14 @@ void		recursive_check(char *name, t_option *option)
 	{
 		while ((dirent = readdir(recursive->dir)) != NULL)
 		{
+			makepath(name, option, dirent);
 			if (option->optiona)
-				if (dirent->d_type == 4 && (ft_strcmp(dirent->d_name, ".")) && (ft_strcmp(dirent->d_name, "..")))
-				{
-					makepath(name, option, dirent);
+				if (dirent->d_type == 4 && (ft_strcmp(dirent->d_name, "."))\
+					&& (ft_strcmp(dirent->d_name, "..")))
 					recursive_check(option->s, option);
-				}
 			if (!(option->optiona))
 				if (dirent->d_type == 4 && dirent->d_name[0] != '.')
-				{
-					makepath(name, option, dirent);
 					recursive_check(option->s, option);
-				}
 		}
 		closedir(recursive->dir);
 	}

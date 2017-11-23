@@ -6,7 +6,7 @@
 /*   By: fofow <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 15:31:55 by fofow             #+#    #+#             */
-/*   Updated: 2017/11/21 14:16:01 by doriol           ###   ########.fr       */
+/*   Updated: 2017/11/23 08:39:32 by doriol           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ t_display	*show6(t_option *option, t_display *display)
 		if (display->tab[display->i][0] != '.')
 		{
 			print_rights(display);
-			ft_printf("%7u %s %s\t%lld\t%s ", display->buf.st_nlink, display->pwd\
-				->pw_name, display->grp->gr_name, \
+			ft_printf("%7u %s %s\t%lld\t%s ", display->buf.st_nlink,
+					display->pwd->pw_name, display->grp->gr_name, \
 				display->buf.st_size, display->time);
 		}
 	}

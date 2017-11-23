@@ -6,7 +6,7 @@
 /*   By: doriol <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 16:37:24 by doriol            #+#    #+#             */
-/*   Updated: 2017/11/21 14:31:25 by doriol           ###   ########.fr       */
+/*   Updated: 2017/11/23 08:37:43 by doriol           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ t_option	*check_option(char **v, t_option *option)
 	return (option);
 }
 
-void	print_total(t_display *display, char *path, char c)
+void		print_total(t_display *display, char *path, char c)
 {
 	int		total;
 	int		i;

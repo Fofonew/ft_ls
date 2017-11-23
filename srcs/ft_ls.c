@@ -6,7 +6,7 @@
 /*   By: fofow <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 09:16:35 by fofow             #+#    #+#             */
-/*   Updated: 2017/11/22 15:46:24 by fofow            ###   ########.fr       */
+/*   Updated: 2017/11/23 08:39:58 by doriol           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ t_recursive	*recursive2(t_recursive *recursive, char *name, t_option *option)
 
 char		*makepath(char *name, t_option *option, struct dirent *dirent)
 {
-		option->s = ft_strjoin(name, "/");
-		option->s = ft_strjoin(option->s, dirent->d_name);
-		return(name);
+	option->s = ft_strjoin(name, "/");
+	option->s = ft_strjoin(option->s, dirent->d_name);
+	return (name);
 }
 
 void		recursive_check(char *name, t_option *option)
